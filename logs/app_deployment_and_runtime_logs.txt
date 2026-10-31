@@ -1,0 +1,42 @@
+Databricks Apps logs for the app lsh-capacity-command-center (Python / Streamlit), copied from the app's log stream
+(databricks apps logs) on 2026-10-31. First number on each line = Unix epoch seconds.
+
+== Three deployments, all successful (BUILD) ==
+1793392383 [SYSTEM] [INFO] Starting Databricks Apps runtime...
+1793422551 [BUILD] [INFO] Starting deployment 01f1d4e7575e1664946fb59dc69716e2...
+1793422551 [BUILD] [INFO] Downloading source code from /Workspace/Users/<app-service-principal>/src/01f1d4e7575e1664946fb59dc69716e2
+1793422551 [BUILD] [INFO] Updated file: python/source_code/app.yaml
+1793422551 [BUILD] [INFO] Updated file: python/source_code/app.py
+1793422552 [BUILD] [INFO] Updated file: python/source_code/requirements.txt
+1793422555 [BUILD] Installing collected packages: psycopg-binary, psycopg, certifi, starlette, databricks-sdk, streamlit
+1793422558 [BUILD] Successfully installed certifi-2026.10.23 databricks-sdk-0.158.0 psycopg-3.3.6 psycopg-binary-3.3.6 starlette-1.10.0 streamlit-1.66.1
+1793422558 [BUILD] [INFO] Requirements installed successfully.
+1793422558 [BUILD] [INFO] Starting app with command: [streamlit run app.py]
+1793422560 [APP] 2026-10-31 04:56:00.280 Uvicorn server started on 0.0.0.0:8000
+1793422560 [APP]   You can now view your Streamlit app in your browser.
+1793422560 [BUILD] [INFO] Deployment 01f1d4e7575e1664946fb59dc69716e2 ended in 8.786860855s
+1793422560 [BUILD] [INFO] Deployment successful
+1793422962 [BUILD] [INFO] Starting deployment 01f1d4e84c6a163e9527e25e75d1468c...      (light theme for buttons)
+1793422964 [BUILD] [INFO] Requirements have not changed. Skipping installation.
+1793422964 [BUILD] [INFO] Starting app with command: [streamlit run app.py]
+1793422964 [APP] 2026-10-31 05:02:44.763 Uvicorn server started on 0.0.0.0:8000
+1793422966 [BUILD] [INFO] Deployment 01f1d4e84c6a163e9527e25e75d1468c ended in 3.390679026s
+1793422966 [BUILD] [INFO] Deployment successful
+1793423118 [BUILD] [INFO] Starting deployment 01f1d4e8a96b1f9db1c8f1f1fc1fbfc2...      (CSS block fix)
+1793423119 [BUILD] [INFO] Requirements have not changed. Skipping installation.
+1793423119 [BUILD] [INFO] Starting app with command: [streamlit run app.py]
+1793423121 [BUILD] [INFO] Deployment 01f1d4e8a96b1f9db1c8f1f1fc1fbfc2 ended in 3.131652527s
+1793423121 [BUILD] [INFO] Deployment successful
+
+== Runtime: the app serving users (APP / HTTP), 05:27-05:30 UTC ==
+Pages were rendered for a signed-in user (Streamlit re-runs the script on every interaction). The only messages logged
+are Streamlit deprecation warnings, no errors:
+1793424474 [APP] 2026-10-31 05:27:54.961 Please replace `use_container_width` with `width`.
+1793424501 [APP] 2026-10-31 05:28:21.438 Please replace `use_container_width` with `width`.
+1793424531 [APP] 2026-10-31 05:28:51.375 Please replace `use_container_width` with `width`.
+1793424576 [APP] 2026-10-31 05:29:36.926 Please replace `use_container_width` with `width`.
+1793424590 [APP] 2026-10-31 05:29:50.021 Please replace `use_container_width` with `width`.
+1793424619 [APP] 2026-10-31 05:30:19.536 Please replace `use_container_width` with `width`.
+(... the same warning repeats on each rerun; 25 lines in total in this window ...)
+
+See evidence/app_deployments.json and evidence/app_metadata.json for the same deployments from the Apps API.

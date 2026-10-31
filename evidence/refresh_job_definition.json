@@ -1,0 +1,108 @@
+{
+  "description": "Daily refresh before the 7:00 AM capacity huddle: ingest (02) -> silver/gold (03) -> governance + metric views (04, must follow 03) -> score + huddle notes (05) -> Lakebase sync (06). Synthetic data. Paused until you enable it.",
+  "email_notifications": {
+    "on_failure": [
+      "sugandha.chauhan@databricks.com"
+    ]
+  },
+  "format": "MULTI_TASK",
+  "max_concurrent_runs": 1,
+  "name": "LSH Capacity Command Center - Daily Refresh",
+  "parameters": [
+    {
+      "default": "schauhan_workspace_catalog",
+      "name": "catalog"
+    },
+    {
+      "default": "lsh_capacity",
+      "name": "prefix"
+    }
+  ],
+  "queue": {
+    "enabled": true
+  },
+  "schedule": {
+    "pause_status": "PAUSED",
+    "quartz_cron_expression": "0 30 6 * * ?",
+    "timezone_id": "America/Chicago"
+  },
+  "tasks": [
+    {
+      "disabled": false,
+      "email_notifications": {},
+      "notebook_task": {
+        "notebook_path": "/Users/sugandha.chauhan@databricks.com/LSH Capacity and LOS Prototype/02 - Lakeflow Connect Ingestion",
+        "source": "WORKSPACE"
+      },
+      "run_if": "ALL_SUCCESS",
+      "task_key": "ingest_bronze",
+      "timeout_seconds": 0
+    },
+    {
+      "depends_on": [
+        {
+          "task_key": "ingest_bronze"
+        }
+      ],
+      "disabled": false,
+      "email_notifications": {},
+      "notebook_task": {
+        "notebook_path": "/Users/sugandha.chauhan@databricks.com/LSH Capacity and LOS Prototype/03 - Silver and Gold Star Schema",
+        "source": "WORKSPACE"
+      },
+      "run_if": "ALL_SUCCESS",
+      "task_key": "silver_gold",
+      "timeout_seconds": 0
+    },
+    {
+      "depends_on": [
+        {
+          "task_key": "silver_gold"
+        }
+      ],
+      "disabled": false,
+      "email_notifications": {},
+      "notebook_task": {
+        "notebook_path": "/Users/sugandha.chauhan@databricks.com/LSH Capacity and LOS Prototype/04 - Unity Catalog Governance and Metric Views",
+        "source": "WORKSPACE"
+      },
+      "run_if": "ALL_SUCCESS",
+      "task_key": "governance_metric_views",
+      "timeout_seconds": 0
+    },
+    {
+      "depends_on": [
+        {
+          "task_key": "governance_metric_views"
+        }
+      ],
+      "disabled": false,
+      "email_notifications": {},
+      "notebook_task": {
+        "notebook_path": "/Users/sugandha.chauhan@databricks.com/LSH Capacity and LOS Prototype/05 - ML Long Stay Risk and Discharge Prediction",
+        "source": "WORKSPACE"
+      },
+      "run_if": "ALL_SUCCESS",
+      "task_key": "score_and_notes",
+      "timeout_seconds": 0
+    },
+    {
+      "depends_on": [
+        {
+          "task_key": "score_and_notes"
+        }
+      ],
+      "disabled": false,
+      "email_notifications": {},
+      "notebook_task": {
+        "notebook_path": "/Users/sugandha.chauhan@databricks.com/LSH Capacity and LOS Prototype/06 - Lakebase Operational Serving",
+        "source": "WORKSPACE"
+      },
+      "run_if": "ALL_SUCCESS",
+      "task_key": "lakebase_sync",
+      "timeout_seconds": 0
+    }
+  ],
+  "timeout_seconds": 7200,
+  "webhook_notifications": {}
+}

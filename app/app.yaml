@@ -1,0 +1,33 @@
+command:
+  - streamlit
+  - run
+  - app.py
+
+env:
+  - name: WAREHOUSE_ID
+    value: "a87df88e51fce476"
+  - name: GENIE_SPACE_ID
+    value: "01f1d49b09321c7db9f9e412c68bde9e"
+  - name: GOLD_SCHEMA
+    value: "schauhan_workspace_catalog.lsh_capacity_gold"
+  - name: SERVING_SCHEMA
+    value: "lsh_capacity_serving"
+  - name: LAKEBASE_ENDPOINT
+    value: "projects/lsh-capacity/branches/production/endpoints/primary"
+  - name: LAKEBASE_HOST
+    value: "ep-round-grass-d1za0378.database.us-west-2.cloud.databricks.com"
+  - name: LAKEBASE_DB
+    value: "databricks_postgres"
+  - name: STREAMLIT_BROWSER_GATHER_USAGE_STATS
+    value: "false"
+  # LSH light theme: overrides the browser's dark mode, which made some buttons black on black
+  - name: STREAMLIT_THEME_BASE
+    value: "light"
+  - name: STREAMLIT_THEME_PRIMARY_COLOR
+    value: "#4a4b96"
+  - name: STREAMLIT_THEME_BACKGROUND_COLOR
+    value: "#f5f5fa"
+  - name: STREAMLIT_THEME_SECONDARY_BACKGROUND_COLOR
+    value: "#ffffff"
+  - name: STREAMLIT_THEME_TEXT_COLOR
+    value: "#241852"

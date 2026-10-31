@@ -1,0 +1,47 @@
+[
+  {
+    "create_time": "2026-10-31T05:05:16Z",
+    "creator": "sugandha.chauhan@databricks.com",
+    "deployment_artifacts": {
+      "source_code_path": "/Workspace/Users/bf14a74d-7000-4d1b-a198-a414f7903a96/src/01f1d4e8a96b1f9db1c8f1f1fc1fbfc2"
+    },
+    "deployment_id": "01f1d4e8a96b1f9db1c8f1f1fc1fbfc2",
+    "mode": "SNAPSHOT",
+    "source_code_path": "/Workspace/Users/sugandha.chauhan@databricks.com/lsh-apps/lsh-capacity-command-center",
+    "status": {
+      "message": "App started successfully",
+      "state": "SUCCEEDED"
+    },
+    "update_time": "2026-10-31T05:05:22Z"
+  },
+  {
+    "create_time": "2026-10-31T05:02:40Z",
+    "creator": "sugandha.chauhan@databricks.com",
+    "deployment_artifacts": {
+      "source_code_path": "/Workspace/Users/bf14a74d-7000-4d1b-a198-a414f7903a96/src/01f1d4e84c6a163e9527e25e75d1468c"
+    },
+    "deployment_id": "01f1d4e84c6a163e9527e25e75d1468c",
+    "mode": "SNAPSHOT",
+    "source_code_path": "/Workspace/Users/sugandha.chauhan@databricks.com/lsh-apps/lsh-capacity-command-center",
+    "status": {
+      "message": "App started successfully",
+      "state": "SUCCEEDED"
+    },
+    "update_time": "2026-10-31T05:02:46Z"
+  },
+  {
+    "create_time": "2026-10-31T04:55:49Z",
+    "creator": "sugandha.chauhan@databricks.com",
+    "deployment_artifacts": {
+      "source_code_path": "/Workspace/Users/bf14a74d-7000-4d1b-a198-a414f7903a96/src/01f1d4e7575e1664946fb59dc69716e2"
+    },
+    "deployment_id": "01f1d4e7575e1664946fb59dc69716e2",
+    "mode": "SNAPSHOT",
+    "source_code_path": "/Workspace/Users/sugandha.chauhan@databricks.com/lsh-apps/lsh-capacity-command-center",
+    "status": {
+      "message": "App started successfully",
+      "state": "SUCCEEDED"
+    },
+    "update_time": "2026-10-31T04:56:01Z"
+  }
+]

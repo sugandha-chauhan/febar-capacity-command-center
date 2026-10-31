@@ -1,0 +1,496 @@
+{
+  "space_id": "01f1d49b09321c7db9f9e412c68bde9e",
+  "title": "LSH Capacity and LOS Analyst (lsh_capacity)",
+  "description": "Synthetic LSH capacity and length-of-stay analyst for the Capacity Command Center app. Metric views and a de-identified bed board in schauhan_workspace_catalog.lsh_capacity_gold. No PHI.",
+  "warehouse_id": "a87df88e51fce476",
+  "parent_path": "/Users/sugandha.chauhan@databricks.com/LSH Capacity and LOS Prototype",
+  "serialized_space": {
+    "version": 2,
+    "config": {
+      "sample_questions": [
+        {
+          "id": "0000000000000000000000000000a100",
+          "question": [
+            "Which hospital had the highest LOS O/E index in FY2026?"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000a101",
+          "question": [
+            "How many high-risk patients are in each hospital right now?"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000a102",
+          "question": [
+            "Which units are forecast to have the fewest open beds tonight?"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000a103",
+          "question": [
+            "What barrier category causes the most avoidable days?"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000a104",
+          "question": [
+            "Show the discharges before noon trend at Prairie Central in FY2026"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000a105",
+          "question": [
+            "Which LMH units ran above 95% occupancy most often in FY2026?"
+          ]
+        }
+      ]
+    },
+    "data_sources": {
+      "tables": [
+        {
+          "identifier": "schauhan_workspace_catalog.lsh_capacity_gold.barrier_metrics",
+          "description": [
+            "CarePort avoidable-day barriers by opened date: barriers, open barriers, avoidable days by category, facility and unit."
+          ],
+          "column_configs": [
+            {
+              "column_name": "Barrier Category",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Facility",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Facility Code",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Unit",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "schauhan_workspace_catalog.lsh_capacity_gold.bed_board_deid",
+          "description": [
+            "Current inpatients at the 7:00 AM snapshot with ML long-stay risk, predicted discharge, open barriers and risk drivers. De-identified: no names or MRNs."
+          ]
+        },
+        {
+          "identifier": "schauhan_workspace_catalog.lsh_capacity_gold.capacity_metrics",
+          "description": [
+            "Daily unit capacity: occupancy, average daily census, admissions, discharges, unit-days above 95%. By date, month, fiscal period, facility, unit and unit type."
+          ],
+          "column_configs": [
+            {
+              "column_name": "Facility",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Facility Code",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Unit",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Unit Type",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "schauhan_workspace_catalog.lsh_capacity_gold.los_metrics",
+          "description": [
+            "Length of stay KPIs by discharge date: ALOS, LOS O/E index, excess days, avoidable days, long-stay rate, discharges before noon, 30-day readmissions."
+          ],
+          "column_configs": [
+            {
+              "column_name": "Barrier Category",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "DRG Description",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Discharge Disposition",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Facility",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Facility Code",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Service Line",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Unit",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "Unit Type",
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "schauhan_workspace_catalog.lsh_capacity_gold.unit_status",
+          "description": [
+            "One row per nursing unit right now: staffed beds, patients, open beds, high-risk patients, expected discharges and admissions today, forecast open beds tonight."
+          ]
+        }
+      ]
+    },
+    "instructions": {
+      "text_instructions": [
+        {
+          "id": "0000000000000000000000000000b100",
+          "content": [
+            "You are the capacity and length-of-stay analyst for Lakeshore Health (LSH) capacity leaders, case managers and nursing directors. All data is synthetic. The current snapshot is the 7:00 AM capacity huddle on Friday, October 30, 2026.\n",
+            "\n",
+            "Data sources:\n",
+            "- los_metrics (metric view): discharged encounters by discharge date. LOS, LOS O/E index, excess days, avoidable days, long-stay rate, discharges before noon, 30-day readmissions.\n",
+            "- capacity_metrics (metric view): one row per unit per day with the midnight census and staffed beds. Occupancy, average daily census, admissions, discharges, unit-days above 95%.\n",
+            "- barrier_metrics (metric view): CarePort avoidable-day barriers by the date they were opened.\n",
+            "- bed_board_deid: everyone in the hospital right now, with long_stay_risk (0-1), risk_tier (High >= 0.5, Medium >= 0.3, Low, or Observation), predicted_discharge_ts, p_discharge_today, days_past_expected, open_barrier_category and risk_drivers. It has no names or MRNs; never try to identify a patient.\n",
+            "- unit_status: one row per unit right now: staffed_beds, patients_now, open_beds_now, high_risk_patients, expected_discharges_today, expected_admissions_today, forecast_open_beds_tonight.\n",
+            "Use bed_board_deid and unit_status for \"now\", \"today\", \"this morning\" or \"currently\" questions. Use the metric views for trends and periods.\n",
+            "\n",
+            "Fiscal calendar: the LSH fiscal year starts September 1. FY2026 = Sep 2025 - Aug 2026. Q1 = Sep-Nov, Q2 = Dec-Feb, Q3 = Mar-May, Q4 = Jun-Aug. \"This fiscal year\" = FY2027, which has only September and October 2026 so far, so say that. \"Last fiscal year\" = FY2026. If the period is unclear, use FY2026 and state the assumption.\n",
+            "\n",
+            "Metrics: always use the predefined measures with MEASURE() and never recompute ratios. LOS O/E Index above 1.0 means patients stay longer than expected (Vizient-style). Excess Days are inpatient days beyond the expected LOS. Occupancy % is midnight census / staffed beds; LSH considers a unit above 95% \"full\". LOS, O/E, excess days, long stays and before-noon discharges are inpatient-only.\n",
+            "\n",
+            "Names: Memorial, LMH or Lakeshore Memorial = LMH; Prairie Central = PCH; Riverbend = RBH; Bluffside = BSH; Oak Ridge = ORH; Fox Valley = FVH; Willow Creek = WCH; Cornfield = CFH. Units are named like '14 West Oncology' with codes like LMH-14W.\n",
+            "\n",
+            "Answers: start with a one-sentence takeaway for a capacity leader, then the table. Show O/E with 2 decimals, percentages with 1 decimal, days with 1 decimal. Sort time series oldest to newest."
+          ]
+        }
+      ],
+      "example_question_sqls": [
+        {
+          "id": "0000000000000000000000000000c100",
+          "question": [
+            "What was the LOS O/E index and excess days by hospital in FY2026?"
+          ],
+          "sql": [
+            "SELECT `Facility`, MEASURE(`LOS O/E Index`) AS los_oe_index, MEASURE(`Excess Days`) AS excess_days, MEASURE(`Inpatient Discharges`) AS inpatient_discharges\n",
+            "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+            "WHERE `Fiscal Year` = 'FY2026'\n",
+            "GROUP BY ALL\n",
+            "ORDER BY los_oe_index DESC"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000c101",
+          "question": [
+            "Show monthly occupancy at LMH for the last 12 months"
+          ],
+          "sql": [
+            "SELECT `Month`, MEASURE(`Occupancy %`) AS occupancy\n",
+            "FROM schauhan_workspace_catalog.lsh_capacity_gold.capacity_metrics\n",
+            "WHERE `Facility Code` = 'LMH' AND `Month` >= add_months(date_trunc('MONTH', DATE'2026-10-30'), -12)\n",
+            "  AND `Month` < date_trunc('MONTH', DATE'2026-10-30')\n",
+            "GROUP BY ALL\n",
+            "ORDER BY `Month` ASC"
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000c102",
+          "question": [
+            "Which high-risk patients at LMH are already past their expected discharge?"
+          ],
+          "sql": [
+            "SELECT unit_name, bed, age, drg_description, round(los_so_far_days, 1) AS day_of_stay, expected_los,\n",
+            "       round(long_stay_risk, 2) AS long_stay_risk, open_barrier_category, risk_drivers\n",
+            "FROM schauhan_workspace_catalog.lsh_capacity_gold.bed_board_deid\n",
+            "WHERE facility_code = 'LMH' AND risk_tier = 'High' AND days_past_expected > 0\n",
+            "ORDER BY long_stay_risk DESC"
+          ]
+        }
+      ]
+    },
+    "benchmarks": {
+      "questions": [
+        {
+          "id": "0000000000000000000000000000d10d",
+          "question": [
+            "How many discharges are expected today at each hospital?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT facility_code, round(sum(expected_discharges_today), 1) AS expected_discharges_today\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.unit_status\n",
+                "GROUP BY facility_code\n",
+                "ORDER BY expected_discharges_today DESC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d10c",
+          "question": [
+            "Which 5 units are forecast to have the fewest open beds tonight?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT facility_code, unit_name, staffed_beds, patients_now, forecast_open_beds_tonight\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.unit_status\n",
+                "ORDER BY forecast_open_beds_tonight ASC\n",
+                "LIMIT 5"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d10b",
+          "question": [
+            "How many patients at LMH are past their expected discharge right now?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT count(*) AS past_expected\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.bed_board_deid\n",
+                "WHERE facility_code = 'LMH' AND days_past_expected > 0"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d10a",
+          "question": [
+            "How many high-risk patients are in each hospital right now?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT facility_code, count(*) AS high_risk_patients\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.bed_board_deid\n",
+                "WHERE risk_tier = 'High'\n",
+                "GROUP BY facility_code\n",
+                "ORDER BY high_risk_patients DESC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d109",
+          "question": [
+            "What was the 30-day readmission rate by discharge disposition in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Discharge Disposition`, MEASURE(`30-Day Readmission Rate`) AS readmit_rate\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+                "WHERE `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY readmit_rate DESC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d108",
+          "question": [
+            "Which 5 DRGs at LMH had the most excess days in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `DRG Description`, MEASURE(`Excess Days`) AS excess_days\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+                "WHERE `Facility Code` = 'LMH' AND `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY excess_days DESC\n",
+                "LIMIT 5"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d107",
+          "question": [
+            "What was the long-stay rate by age band in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Age Band`, MEASURE(`Long Stay Rate`) AS long_stay_rate\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+                "WHERE `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY `Age Band` ASC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d106",
+          "question": [
+            "Compare avoidable days and barriers in FY2025 vs FY2026"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Fiscal Year`, MEASURE(`Barriers`) AS barriers, MEASURE(`Avoidable Days`) AS avoidable_days\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.barrier_metrics\n",
+                "WHERE `Fiscal Year` IN ('FY2025', 'FY2026')\n",
+                "GROUP BY ALL\n",
+                "ORDER BY `Fiscal Year` ASC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d105",
+          "question": [
+            "Which barrier category caused the most avoidable days in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Barrier Category`, MEASURE(`Avoidable Days`) AS avoidable_days\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.barrier_metrics\n",
+                "WHERE `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY avoidable_days DESC\n",
+                "LIMIT 1"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d104",
+          "question": [
+            "Which 5 LMH units had the highest occupancy in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Unit`, MEASURE(`Occupancy %`) AS occupancy\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.capacity_metrics\n",
+                "WHERE `Facility Code` = 'LMH' AND `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY occupancy DESC\n",
+                "LIMIT 5"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d103",
+          "question": [
+            "What was average occupancy at LMH by fiscal quarter in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Fiscal Quarter`, MEASURE(`Occupancy %`) AS occupancy\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.capacity_metrics\n",
+                "WHERE `Facility Code` = 'LMH' AND `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY `Fiscal Quarter` ASC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d102",
+          "question": [
+            "What was the discharges before noon percentage at Prairie Central by month in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Discharge Month`, MEASURE(`Discharges Before Noon %`) AS before_noon\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+                "WHERE `Facility Code` = 'PCH' AND `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY `Discharge Month` ASC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d101",
+          "question": [
+            "How many excess days did Lakeshore Memorial have in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT MEASURE(`Excess Days`) AS excess_days\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+                "WHERE `Facility Code` = 'LMH' AND `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0000000000000000000000000000d100",
+          "question": [
+            "Which hospital had the highest LOS O/E index in FY2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT `Facility`, MEASURE(`LOS O/E Index`) AS los_oe_index\n",
+                "FROM schauhan_workspace_catalog.lsh_capacity_gold.los_metrics\n",
+                "WHERE `Fiscal Year` = 'FY2026'\n",
+                "GROUP BY ALL\n",
+                "ORDER BY los_oe_index DESC\n",
+                "LIMIT 1"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "etag": "e60e6ef80a4d63f6dfcfafb1ca8286e219058b146fffe368b3e66fe0f7c4c1dd",
+  "create_time": "2026-10-30T19:49:36.453Z",
+  "update_time": "2026-10-30T19:51:17.746Z"
+}
